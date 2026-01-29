@@ -11,7 +11,8 @@ select customer_id , purchase_amount from customer where
 discount_applied='Yes' and 
 purchase_amount>(select avg(purchase_amount) from customer);
 
--- 3. which are the top 5 products with the highest avcerage review rating
+-- 3. Which are the top 5 products with the highest avcerage review rating?
+
 select item_purchased, round(avg(review_rating)::numeric,2)  as average_Product_rating from customer group by item_purchased 
 order by avg(review_rating) desc limit 5;
 
@@ -30,15 +31,9 @@ select item_purchased as Product, round(100 *sum(case when discount_applied='Yes
 group by item_purchased 
 order by discount_rate desc limit 10;
 
---7. Segment customers into new , Returning and loyal based on their total
+-- 7. Segment customers into new , Returning and loyal based on their total
 --   number of previos purchases and show thc count of each segment.
 
--- select customer_id , 
--- case
--- when previous_purchases=1  then 'New' 
--- when previous_purchases between 2 and 10 then 'Returning' 
--- else 'Loyal'
--- end as Type_of_customer from customer  group by previous_purchases order by Type_of_customer desc;
 
 with customer_type as (
 select customer_id,previous_purchases,
